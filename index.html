@@ -5,11 +5,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Event Listners</title>
+    <style>
+        .progress {
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .progress>div {
+            height: 3px;
+            background-color: lightblue;
+            width: 0%;
+        }
+
+        body {
+            height: 2000px;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <script src="index.js"></script>
+
+    <div class="progress">
+        <div></div>
+    </div>
+
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" data-help="Your Full Name">
+    <label for="age">Age:</label>
+    <input type="text" name="age" id="age" data-help="Your Age in Years">
+    <div class="help"></div>
+
+    <label for="censored">Censored:</label>
+    <input type="text" name="censored" class='censored' placeholder="no Q, W or X">
+
+
+
+
+    <script>
+        const bar = document.querySelector('.progress div');
+        addEventListener('scroll', () => {
+            const max = document.body.scrollHeight - innerHeight;
+            const percent = (pageYOffset / max) * 100;
+            bar.style.width = `${percent}%`;
+            console.log(percent);
+        })
+
+        const help = document.querySelector('.help');
+        const fields = document.querySelectorAll('input');
+
+        for (const field of fields) {
+            field.addEventListener('focus', function (event) {
+                help.innerText = this.getAttribute('data-help');
+
+            });
+
+            field.addEventListener('blur', function () {
+                help.innerText = "";
+            });
+        }
+
+        setTimeout(() => console.log('haha, Scared you!!'), 2000);
+
+        //Q=81 w=87 x=88
+        const censored = document.querySelector('.censored');
+
+        censored.addEventListener('keydown', (event) => {
+            if (event.keyCode === 81 || event.keyCode === 87 || event.keyCode === 88) {
+                event.preventDefault();
+            }
+        })
+    </script>
 </body>
 
 </html>
